@@ -1,7 +1,0 @@
-SELECT h.Id,h.Month,SUM(h.Salary) OVER(PARTITION BY h.Id ORDER BY h.Month) AS Salary
-FROM hard_employee h
-JOIN (SELECT Id, MAX(Month) AS Month
-FROM hard_employee
-GROUP BY Id) m
-ON h.Id=m.Id AND h.Month<m.Month 
-ORDER BY Id,Month DESC;
