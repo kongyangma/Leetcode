@@ -1,0 +1,6 @@
+SELECT x.Id
+FROM Weather x
+JOIN Weather y
+ON x.Temperature>y.Temperature
+AND TO_DAYS(x.RecordDate)-TO_DAYS(y.RecordDate)=1
+;
