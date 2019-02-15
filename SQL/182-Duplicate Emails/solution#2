@@ -1,0 +1,5 @@
+SELECT DISTINCT P1.Email
+FROM Person P1
+JOIN Person P2
+ON P1.Email=P2.Email
+WHERE P1.Id<>P2.Id;
