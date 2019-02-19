@@ -1,0 +1,7 @@
+SELECT e.follower, COUNT(r.follower) AS num
+FROM follow e
+JOIN follow r
+ON e.follower=r.followee
+GROUP BY e.follower
+ORDER BY num DESC
+;
