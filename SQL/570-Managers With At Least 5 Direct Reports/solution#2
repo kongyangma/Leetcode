@@ -1,0 +1,7 @@
+SELECT Name
+FROM Employee
+WHERE Id IN (SELECT e1.ManagerId
+		     FROM Employee e1
+             GROUP BY e1.ManagerId
+             HAVING COUNT(*)>=5
+);
