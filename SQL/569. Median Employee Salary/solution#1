@@ -1,0 +1,6 @@
+SELECT Id, Company, Salary
+FROM
+(SELECT Id, Company, Salary,ROW_NUMBER() OVER(PARTITION BY Company ORDER BY Salary) AS rnk,
+       COUNT(*) OVER(PARTITION BY Company) AS cnt
+FROM median_employee) ranked
+WHERE rnk IN (CEIL(cnt/2.0),cnt/2+1);
