@@ -1,0 +1,9 @@
+/*This use no subquery, which would be faster and clearer*/
+
+SELECT d.Name AS Department, e.Name AS Employee, e.Salary 
+FROM Department d, Employee e, Employee e2  
+WHERE d.Id=e.DepartmentId AND e.DepartmentId = e2.DepartmentId 
+AND e.Salary <= e2.Salary
+GROUP BY d.Id,e.Name 
+HAVING COUNT(DISTINCT e2.Salary)<=3
+ORDER BY d.Name, e.Salary DESC;
