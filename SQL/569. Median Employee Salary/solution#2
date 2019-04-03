@@ -1,0 +1,15 @@
+SELECT Id, Company, Salary
+ FROM (
+ SELECT e.Id, e.Company,e.Salary,
+        IF(@pre_v=e.Company, @row_rank:=@row_rank+1,@row_rank:=1) AS row_rank,@pre_v:=e.Company
+ FROM median_employee e, (SELECT @row_rank:=0, @pre_v:=0) AS temp
+ ORDER BY e.Company, e.Salary, e.Id
+ ) ranked
+ JOIN (SELECT COUNT(*) AS totalcount, Company AS c_name
+       FROM median_employee e2
+       GROUP BY e2.Company)companycount
+ ON companycount.c_name=ranked.Company
+ WHERE row_rank=FLOOR((totalcount+1)/2) OR row_rank=FLOOR((totalcount+2)/2) 
+ ;
+ 
+ 
