@@ -1,0 +1,16 @@
+/*Pretty fast, but may not be as fast as solution#2*/
+
+SELECT d.Name Department, e.Name Employee, computed.Salary Salary
+FROM Employee e, 
+     (SELECT Salary, DepartmentId, @row:=IF(@did=DepartmentId, @row+1,1) AS row_rank,
+      @did:=DepartmentId
+      FROM (SELECT DISTINCT Salary, DepartmentId
+            FROM Employee ORDER BY DepartmentId, Salary DESC) ordered, 
+            (SELECT @row:=0,@did:=0) init
+            ) computed, department d
+WHERE e.Salary=computed.Salary 
+AND e.DepartmentId=computed.DepartmentId
+AND computed.DepartmentId=d.Id
+AND computed.row_rank<=3
+ORDER BY computed.DepartmentId, computed.Salary DESC
+;
