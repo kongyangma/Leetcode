@@ -1,0 +1,5 @@
+/*Fastest Solution*/
+SELECT DISTINCT t.Num AS ConsecutiveNums
+FROM (SELECT Num, @count:=IF(@pre=Num,@count+1,1)AS cnt, @pre:=Num
+      FROM Logs, (SELECT @count:=0, @pre:=0) AS init) AS t
+WHERE t.cnt>=3;
